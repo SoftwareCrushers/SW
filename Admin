@@ -1,0 +1,69 @@
+import java.util.Scanner;
+import java.util.Vector;
+
+public class Admin {
+
+	String userName, password, mail, phone;
+	int adminID;
+	
+	
+	public static void Display(Vector<Product>p)
+	{
+		for(int i=0;i<p.size();i++)
+		{
+			System.out.println("Name      : "+p.get(i).PName);
+			System.out.println("Price     : "+p.get(i).Price);
+			System.out.println("Quantity    : "+p.get(i).Quantity);
+			System.out.println("BrandName : "+p.get(i).BrandName);
+			System.out.println("Type      : "+p.get(i).ProductType);
+			System.out.println("StoreName      : "+p.get(i).StoreName);
+			System.out.println("-----------------------------------------------------------");
+		}
+	}
+
+	public static boolean Login(Vector<Admin> admins, Admin admin) {
+
+		boolean check = false;
+
+		for (int i = 0; i < admins.size(); i++) {
+			
+			if (admin.userName.equals(admins.get(i).userName) && admin.password.equals(admins.get(i).password))
+			{
+				System.out.println("LogIn Succeded !  Welcome " + admin.userName);
+
+				admin.adminID = admins.get(i).adminID;
+				admin.mail = admins.get(i).mail;
+				admin.phone = admins.get(i).phone;
+
+				check = true;
+
+			}
+
+		}
+		if (check == false)
+			System.out.println("LogIn Failed ! You Should RegisterIn ");
+
+		return check;
+
+	}
+
+	public static void GetInfo(Vector<Admin> admins, Admin admin2) {
+
+		for (int i = 0; i < admins.size(); i++) {
+			if (admin2.userName.equals(admins.get(i).userName) && admin2.password.equals(admins.get(i).password)) {
+				System.out.println("1)AdminName : " + admins.get(i).userName);
+				System.out.println("2)Password : " + admins.get(i).password);
+				System.out.println("3)AdminID: " + admins.get(i).adminID);
+				System.out.println("4)Mail : " + admins.get(i).mail);
+				System.out.println("5)Phone : " + admins.get(i).phone);
+
+				break;
+			}
+
+		}
+
+	}
+
+
+
+}
