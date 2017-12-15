@@ -77,6 +77,49 @@ public class User {
     		System.out.println("Wrong Choice !!! ");
 
 	}
-  
+  public static boolean Login(Vector<User> users, User user)  // gemi
+	{
+		boolean check =false;
+		
+		for (int i=0;i<users.size();i++)
+		{
+			if(user.userName.equals(users.get(i).userName) && user.password .equals(users.get(i).password))
+			{
+				System.out.println("LogIn Succeded !  Welcome "+user.userName);
+				users.get(i).Active=true;
+				user.userID=users.get(i).userID;
+				user.address=users.get(i).address;
+				user.mail=users.get(i).mail;
+				user.Active=users.get(i).Active;
+				user.userType=users.get(i).userType;
+				user.phone=users.get(i).phone;
+			
+				check=true;
+			}
+			
+		}
+		
+		if(check==false)
+			System.out.println("LogIn Failed ! You Should Register ");
+		
+		return check;
+		
+	}
+	
+	public static void Logout(Vector<User> users, User user)  // gemi
+	{
+		
+		for (int i=0;i<users.size();i++)
+		{
+			if(user.userName .equals(users.get(i).userName )&& user.password.equals(users.get(i).password))
+			{
+				System.out.println("LogOut Succeded !");
+				users.get(i).Active=false;
+				break;
+			}
+			
+		}
+	
+	}
   
   }
