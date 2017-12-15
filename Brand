@@ -1,0 +1,23 @@
+import java.util.Scanner;
+import java.util.Vector;
+
+public class Brand {
+
+	public static String name;
+	public  Vector<Product> brandProducts = new Vector<Product>();
+
+	public  void Get_Brand_Products() 
+	{
+		
+		for (int i = 0; i <brandProducts.size(); i++) 
+		{
+			System.out.println("Name : " +brandProducts.get(i).PName);
+			System.out.println("Price : " +brandProducts.get(i).Price);
+			System.out.println("Product type : " +brandProducts.get(i).ProductType);
+			System.out.println("Quantity : " + brandProducts.get(i).Quantity);
+			System.out.println("storeName : " + brandProducts.get(i).StoreName);
+		}
+
+	}
+
+}
