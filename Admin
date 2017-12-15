@@ -64,7 +64,7 @@ public class Admin {
 
 	}
 
-	public static void AddProduct(Vector<Product> p, Vector<Brand> systemBrands) 
+	public static void AddProduct (Vector<Product> p, Vector<Brand> systemBrands) 
 	{
 		Scanner input = new Scanner(System.in);
 		Product product = new Product();
@@ -76,8 +76,9 @@ public class Admin {
 		System.out.println("Enter Brand Name : ");
 		product.BrandName = input.nextLine();
 
-		for (int i = 0; i < p.size(); i++) {
-			if (product.PName.equals(p.get(i).PName) && (product.BrandName.equals(p.get(i).BrandName))) // updated
+		for (int i = 0; i < p.size(); i++) 
+		{
+			if (product.PName.equals(p.get(i).PName) && (product.BrandName.equals(p.get(i).BrandName)))  // updated
 			{
 				System.out.println("Product already exist ");
 
@@ -87,10 +88,10 @@ public class Admin {
 				check = true;
 				break;
 			}
-
 		}
 
-		if (check == false) {
+		if (check == false) 
+		{
 
 			System.out.println("Enter Price : ");
 			product.Price = input.nextInt();
@@ -104,18 +105,22 @@ public class Admin {
 
 			product.StoreName = "";
 			System.out.println("Product Added ! ");
+			
 			p.add(product); // Product added !
 
 			boolean check1 = false;
-			for (int i = 0; i < systemBrands.size(); i++) {
-				if (product.BrandName.equals(systemBrands.get(i).name)) {
+			for (int i = 0; i < systemBrands.size(); i++) 
+			{
+				if (product.BrandName.equals(systemBrands.get(i).name))
+				{
 					systemBrands.get(i).brandProducts.add(product);
 					check1 = true;
 					break;
 				}
 			}
 
-			if (check1 == false) {
+			if (check1 == false)
+			{
 				Brand brand = new Brand();
 				brand.name = product.BrandName;
 				brand.brandProducts.add(product);
@@ -215,6 +220,5 @@ public class Admin {
 		voucher.add(Voucher);
 
 	}
-
 
 }
