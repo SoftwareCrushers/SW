@@ -225,4 +225,30 @@ public class User {
 		}
 	}
 	
+		public static void ExploreProducts(Vector<Store> stores)   // Eslam Yasser
+	{
+		
+		for(int i=0 ; i<stores.size();i++)
+		{
+			System.out.println(i+")"+stores.get(i).Name);
+		}
+		System.out.println("Enter Store number : ");
+		int choice;
+		Scanner input = new Scanner(System.in);
+		choice=input.nextInt();
+		
+		for(int i=0 ; i < stores.get(choice).product.size();i++)
+		{
+			
+			System.out.println("Name : "+stores.get(choice).product.get(i).PName);
+			System.out.println("Price : "+stores.get(choice).product.get(i).Price);
+			System.out.println("Product type : "+stores.get(choice).product.get(i).ProductType);
+			System.out.println("Brand Name : "+stores.get(choice).product.get(i).BrandName);
+			System.out.println("Quantity : "+stores.get(choice).product.get(i).Quantity);
+			System.out.println("storeName : "+stores.get(choice).product.get(i).StoreName);
+
+		}
+
+	}
+	
   }
