@@ -1,0 +1,106 @@
+import java.util.Scanner;
+import java.util.Vector;
+
+
+
+public class Order {
+
+	int orderID;
+	String orderDate;
+	static double TotalCharge=0;
+	boolean closed=false;
+	
+	
+	
+	public static void CalcTotalCharge(Cart cart)
+	{
+		for(int i=0 ;i <cart.listOfProduct.size();i++)
+		{
+			TotalCharge+=(cart.listOfProduct.get(i).Price*cart.listOfProduct.get(i).Quantity);
+		}
+		
+		System.out.println("Total Charge : "+ TotalCharge);
+	}
+	
+	public static void MakeOrder(Cart cart ,Vector<Payment> VoucherCards ,Buyer b)
+	{
+		CalcTotalCharge(cart);
+		
+		System.out.println("Confirm Products ? Yes/No ");
+		Scanner input=new Scanner(System.in);
+		String choice=input.nextLine();
+		
+		if(choice.equals("Yes"))
+		{
+			System.out.println("Choose Payment Method : ");
+			System.out.println(" 1. On Delivery ");
+			System.out.println(" 2.Voucher Card ");
+			System.out.println(" 3.Credit Card ");
+
+			int choice1=input.nextInt();
+			
+			while(true)
+			{
+				if(choice1==1)
+				{
+					System.out.println("Products are added to delivery list");
+					break;
+					
+				}
+				
+				else if(choice1==2)
+					{
+					
+					if(b.Vochar==false)
+					{
+						for(int i=0;i<VoucherCards.size();i++)
+						{
+							if(VoucherCards.get(i).status==false)
+							{
+								System.out.print("Vocuhier ID : "+VoucherCards.get(i).VoucherID);
+							    System.out.print("Vocuhier Balance : "+VoucherCards.get(i).balance);
+							   System.out.print("Vocuhier  % : "+VoucherCards.get(i).Percentage);
+							}
+						}
+						
+						System.out.println("Enter Voucher ID ");
+						int VoucherID=input.nextInt();
+						
+						boolean check=false;
+						for(int i=0 ; i<VoucherCards.size();i++)
+						{
+							if(VoucherID == VoucherCards.get(i).VoucherID && VoucherCards.get(i).IsValidTransaction(VoucherCards.get(i)))
+							{
+								b.Vochar=true;
+								TotalCharge/=VoucherCards.get(i).balance;
+								System.out.println("Process succeeded ! ");
+								check=true;
+								break;
+							}
+						}
+						if (check==false)
+							System.out.println("Wrong Informations , Try agian . ");
+							
+						break;
+						}
+					
+					else if(b.Vochar==true)
+						System.out.println("You already used this Method before and now not avilable for you . ");
+
+					}
+					else if(choice1==3)
+					{
+						System.out.println("Transaction Succesded !!");
+						break;
+					}
+				}
+					
+				
+			}
+			
+	}
+}
+					
+	
+	
+
