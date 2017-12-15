@@ -16,7 +16,7 @@ public class Order {
 	{
 		for(int i=0 ;i <cart.listOfProduct.size();i++)
 		{
-			TotalCharge+=(cart.listOfProduct.get(i).Price*cart.listOfProduct.get(i).Quantity);
+			TotalCharge+=((cart.listOfProduct.get(i).Price)*(cart.listOfProduct.get(i).Quantity));
 		}
 		
 		System.out.println("Total Charge : "+ TotalCharge);
@@ -44,6 +44,7 @@ public class Order {
 				if(choice1==1)
 				{
 					System.out.println("Products are added to delivery list");
+					b.carts.listOfProduct.clear();
 					break;
 					
 				}
@@ -55,12 +56,10 @@ public class Order {
 					{
 						for(int i=0;i<VoucherCards.size();i++)
 						{
-							if(VoucherCards.get(i).status==false)
-							{
+							
 								System.out.print("Vocuhier ID : "+VoucherCards.get(i).VoucherID);
-							    System.out.print("Vocuhier Balance : "+VoucherCards.get(i).balance);
+							    System.out.print("Vocuhier Balance Greater Than  : "+VoucherCards.get(i).balance);
 							   System.out.print("Vocuhier  % : "+VoucherCards.get(i).Percentage);
-							}
 						}
 						
 						System.out.println("Enter Voucher ID ");
@@ -69,12 +68,14 @@ public class Order {
 						boolean check=false;
 						for(int i=0 ; i<VoucherCards.size();i++)
 						{
-							if(VoucherID == VoucherCards.get(i).VoucherID && VoucherCards.get(i).IsValidTransaction(VoucherCards.get(i)))
+							if(VoucherID == VoucherCards.get(i).VoucherID )
 							{
 								b.Vochar=true;
-								TotalCharge/=VoucherCards.get(i).balance;
+								TotalCharge=(VoucherCards.get(i).balance*TotalCharge)/100;
+								System.out.println("TotalCharg After Discount is  : "+TotalCharge);
 								System.out.println("Process succeeded ! ");
 								check=true;
+								b.carts.listOfProduct.clear();
 								break;
 							}
 						}
@@ -91,6 +92,7 @@ public class Order {
 					else if(choice1==3)
 					{
 						System.out.println("Transaction Succesded !!");
+						b.carts.listOfProduct.clear();
 						break;
 					}
 				}
@@ -98,6 +100,7 @@ public class Order {
 				
 			}
 			
+		TotalCharge=0;
 	}
 }
 					
