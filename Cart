@@ -1,0 +1,25 @@
+import java.util.Vector;
+
+
+public class Cart {
+	
+public static Vector<Product> listOfProduct=new Vector<Product>();
+public static int Quantity;
+
+
+public  static void DisplayProducts()
+{
+	
+		for(int i=0;i<listOfProduct.size();i++)
+		{
+			System.out.println("Name      : "+listOfProduct.get(i).PName);
+			System.out.println("Price     : "+listOfProduct.get(i).Price);
+			System.out.println("BrandName : "+listOfProduct.get(i).BrandName);
+			System.out.println("Type      : "+listOfProduct.get(i).ProductType);
+			System.out.println("StoreName : "+listOfProduct.get(i).StoreName);
+			System.out.println("-----------------------------------------------------------");
+
+		}
+}
+
+}
