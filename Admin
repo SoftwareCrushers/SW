@@ -150,5 +150,71 @@ public class Admin {
 
 	}
 
+	public static void AcceptProduct(Vector<Product> suggest, Vector<Product> p) 
+	{
+		
+		if(suggest.size() != 0)
+		{
+			System.out.println("Suggested Products : ");
+
+			for (int i = 0; i < suggest.size(); i++) {
+
+				System.out.println("Product Name : " + suggest.get(i).PName);
+
+				System.out.println("Product Price : " + suggest.get(i).Price);
+
+				System.out.println("Product Brand Name : " + suggest.get(i).BrandName);
+
+				System.out.println("Product Type : " + suggest.get(i).ProductType);
+				
+				System.out.println("------------------------------------------------------------");
+
+			}
+
+			System.out.println("Enter Name of Product to be added to the System");
+
+			String choice;
+			Scanner input = new Scanner(System.in);
+			choice = input.nextLine();
+			
+			for (int i = 0; i < suggest.size(); i++) {
+
+				if (choice.equals(suggest.get(i).PName)) {
+					
+					Product product = new Product();
+					product.PName = suggest.get(i).PName;
+					product.Price = suggest.get(i).Price;
+					product.BrandName = suggest.get(i).BrandName;
+					product.ProductType = suggest.get(i).ProductType;
+					p.add(product);
+				}
+			}
+
+		}
+		else
+		{
+			System.out.println("Empty Suggestions !! ");
+		}
+		
+	}
+
+	public static void Provide_Voucher(Vector<Payment> voucher) 
+	{ 
+		Scanner input = new Scanner(System.in);
+		Payment Voucher = new Payment();
+		System.out.println("Enter Voucher ID ");
+		Voucher.VoucherID = input.nextInt();
+		input.nextLine();
+	
+		System.out.println("Enter Voucher  Balance ");
+        Voucher.balance=input.nextInt();
+        
+        System.out.println("Enter Provided %  ");
+        Voucher.Percentage=input.nextInt();
+        
+		voucher.add(Voucher);
+
+	}
+
 
 }
