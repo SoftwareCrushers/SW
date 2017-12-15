@@ -1,0 +1,13 @@
+public class Payment {
+
+	int VoucherID;
+	int balance;
+	int Percentage;
+	
+	boolean status=false;
+
+	public static boolean IsValidTransaction(Payment Voucher)
+	{	
+		return Voucher.status;
+	}
+}
