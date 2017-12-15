@@ -64,6 +64,91 @@ public class Admin {
 
 	}
 
+	public static void AddProduct(Vector<Product> p, Vector<Brand> systemBrands) 
+	{
+		Scanner input = new Scanner(System.in);
+		Product product = new Product();
+		boolean check = false;
+
+		System.out.println("Enter Name : ");
+		product.PName = input.nextLine();
+
+		System.out.println("Enter Brand Name : ");
+		product.BrandName = input.nextLine();
+
+		for (int i = 0; i < p.size(); i++) {
+			if (product.PName.equals(p.get(i).PName) && (product.BrandName.equals(p.get(i).BrandName))) // updated
+			{
+				System.out.println("Product already exist ");
+
+				System.out.println("Enter Quantity : ");
+				product.Quantity = input.nextInt();
+				p.get(i).Quantity += product.Quantity;
+				check = true;
+				break;
+			}
+
+		}
+
+		if (check == false) {
+
+			System.out.println("Enter Price : ");
+			product.Price = input.nextInt();
+			input.nextLine();
+			
+			System.out.println("Enter type : ");
+			product.ProductType = input.nextLine();
+
+			System.out.println("Enter Quantity : ");
+			product.Quantity = input.nextInt();
+
+			product.StoreName = "";
+			System.out.println("Product Added ! ");
+			p.add(product); // Product added !
+
+			boolean check1 = false;
+			for (int i = 0; i < systemBrands.size(); i++) {
+				if (product.BrandName.equals(systemBrands.get(i).name)) {
+					systemBrands.get(i).brandProducts.add(product);
+					check1 = true;
+					break;
+				}
+			}
+
+			if (check1 == false) {
+				Brand brand = new Brand();
+				brand.name = product.BrandName;
+				brand.brandProducts.add(product);
+				systemBrands.add(brand);
+			}
+		}
+
+	}
+
+	public static void AddBrand(Vector<Brand> b) {
+
+		Scanner input = new Scanner(System.in);
+		Brand brand = new Brand();
+		boolean check = false;
+
+		System.out.println("Enter Name : ");
+
+		brand.name = input.nextLine();
+
+		for (int i = 0; i < b.size(); i++) {
+			if (brand.name.equals(b.get(i).name)) {
+				System.out.println("Brand already exist ");
+				check = true;
+				break;
+			}
+
+		}
+		if (check == false) {
+
+			b.add(brand);
+		}
+
+	}
 
 
 }
