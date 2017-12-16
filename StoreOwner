@@ -38,58 +38,65 @@ public class StoreOwner extends User{
 	
 	public static void AddProduct(Vector<Product> systemProducts , Vector<Store> s ,Vector<Brand> Brands)
 	{
-		for(int i=0 ; i<s.size();i++)
+		if(s.size() != 0)
 		{
-			System.out.println(i+")"+s.get(i).Name);
-		}
-		
-		int choice;
-		System.out.println("Enter Store Number : ");
-		Scanner input = new Scanner(System.in);
-		choice=input.nextInt();
-		
-		input.nextLine();
-		
-		Product product=new Product();
-		
-		System.out.println("Product Name : ");
-		product.PName=input.nextLine();
-		System.out.println("Product Price : ");
-		product.Price=input.nextInt();
-		input.nextLine();
+			for(int i=0 ; i<s.size();i++)
+			{
+				System.out.println(i+")"+s.get(i).Name);
+			}
+			
+			int choice;
+			System.out.println("Enter Store Number : ");
+			Scanner input = new Scanner(System.in);
+			choice=input.nextInt();
+			
+			input.nextLine();
+			
+			Product product=new Product();
+			
+			System.out.println("Product Name : ");
+			product.PName=input.nextLine();
+			System.out.println("Product Quantity : ");
+			product.Quantity=input.nextInt();
+			System.out.println("Product Price : ");
+			product.Price=input.nextInt();
+			input.nextLine();
 
-		System.out.println("Product Brand Name : ");
-		product.BrandName=input.nextLine();
-		
-		System.out.println("Product Type : ");
-		product.ProductType=input.nextLine();
-				
-		product.StoreName=s.get(choice).Name;
-		
-			s.get(choice).product.add(product);
-			System.out.println("Product Added Succesfully !! ");
-				
-			systemProducts.add(product);
+			System.out.println("Product Brand Name : ");
+			product.BrandName=input.nextLine();
 			
-			boolean check=false;
-			for(int i =0 ; i <Brands.size();i++)
-			{
-				if(product.BrandName.equals(Brands.get(i).name))
+			System.out.println("Product Type : ");
+			product.ProductType=input.nextLine();
+					
+			product.StoreName=s.get(choice).Name;
+			
+				s.get(choice).product.add(product);
+				System.out.println("Product Added Succesfully !! ");
+					
+				systemProducts.add(product);
+				
+				boolean check=false;
+				for(int i =0 ; i <Brands.size();i++)
 				{
-					Brands.get(i).brandProducts.add(product);
-					check=true;
-					break;
+					if(product.BrandName.equals(Brands.get(i).name))
+					{
+						Brands.get(i).brandProducts.add(product);
+						check=true;
+						break;
+					}
 				}
-			}
-			
-			if (check==false) 
-			{
-				Brand brand=new Brand();
-				brand.name=product.BrandName;
-				brand.brandProducts.add(product);
-				Brands.add(brand);
-			}
-		
+				
+				if (check==false) 
+				{
+					Brand brand=new Brand();
+					brand.name=product.BrandName;
+					brand.brandProducts.add(product);
+					Brands.add(brand);
+				}
+		}
+	
+		else
+			System.out.println("You Should have at least One Store !!! ");
 
 	}
 
