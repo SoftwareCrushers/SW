@@ -12,90 +12,103 @@ public class Buyer extends User{
 	
 	public static void AddProduct(Vector<Product> p , Vector<Store> systemStores )
 	{
-		for(int i=0;i<p.size();i++)
+		if(p.size() != 0)
 		{
-			System.out.println("Name      : "+p.get(i).PName);
-			System.out.println("Price     : "+p.get(i).Price);
-			System.out.println("BrandName : "+p.get(i).BrandName);
-			System.out.println("Type      : "+p.get(i).ProductType);
-			System.out.println("StoreName : "+p.get(i).StoreName);
-			System.out.println("-----------------------------------------------------------");
-		}
-		
-		
-		System.out.println("Please Enter Product Name : ");
-		
-		String n,storeName="";
-		int idx=-1;
-		
-		Scanner input=new Scanner(System.in);
-		
-		n=input.nextLine();
-		//to search product in system Products
-		for(int i=0;i<p.size();i++)
-			if(n.equals(p.get(i).PName))
-				storeName=p.get(i).StoreName;
-		
-		//to search product in store product
-		if(storeName!="")   // add by storeowner
-			for(int i=0;i<systemStores.size();i++)
-				if(storeName.equals(systemStores.get(i).Name))
-					idx=i;
-			
-		
-		for(int i=0;i<p.size();i++)
-		{
-			if(n.equals(p.get(i).PName))
+			for(int i=0;i<p.size();i++)
 			{
-				if(p.get(i).Quantity == 0)
-					System.out.println("Empty Quantity Product !! ");
-				
-				else 
+				System.out.println("Name      : "+p.get(i).PName);
+				System.out.println("Price     : "+p.get(i).Price);
+				System.out.println("BrandName : "+p.get(i).BrandName);
+				System.out.println("Type      : "+p.get(i).ProductType);
+				System.out.println("StoreName : "+p.get(i).StoreName);
+				System.out.println("-----------------------------------------------------------");
+			}
+			
+			
+			System.out.println("Please Enter Product Name : ");
+			
+			String n,storeName="";
+			int idx=-1;
+			
+			Scanner input=new Scanner(System.in);
+			
+			n=input.nextLine();
+			//to search product in system Products
+			for(int i=0;i<p.size();i++)
+				if(n.equals(p.get(i).PName))
+					storeName=p.get(i).StoreName;
+			
+			//to search product in store product
+			
+			if(storeName != "")        
+			{
+				for(int i=0;i<systemStores.size();i++)
 				{
-					int Q;
-					System.out.println("Enter Quantity : ");
-					Q=input.nextInt();
+					if(storeName.equals(systemStores.get(i).Name))
+						idx=i;
+				
+				}
 					
-					if(Q > p.get(i).Quantity)
+			}
+			
+			for(int i=0;i<p.size();i++)
+			{
+				if(n.equals(p.get(i).PName))
+				{
+					if(p.get(i).Quantity == 0)
 						System.out.println("Empty Quantity Product !! ");
 					
 					else 
 					{
-						if(idx!=-1)
-							{
-									for(int j=0 ; j<systemStores.get(idx).product.size();j++)
-									{
-										if(n.equals(systemStores.get(idx).product.get(j).PName))
-											systemStores.get(idx).product.get(j).Quantity-=Q;
-									}
-							}
-						p.get(i).Quantity-=Q;
+						int Q;
+						System.out.println("Enter Quantity : ");
+						Q=input.nextInt();
 						
-						boolean check =false;
+						if(Q > p.get(i).Quantity)
+							System.out.println("Empty Quantity Product !! ");
+						
+						else 
+						{
+							if(idx!=-1)
+								{
+										for(int j=0 ; j<systemStores.get(idx).product.size();j++)
+										{
+											if(n.equals(systemStores.get(idx).product.get(j).PName))
+												systemStores.get(idx).product.get(j).Quantity-=Q;
+										}
+								}
+							p.get(i).Quantity-=Q;
+							
+							boolean check =false;
 
-						for(int j=0;j<carts.listOfProduct.size();j++)
-						{
-							if(n.equals(carts.listOfProduct.get(j).PName))
+							for(int j=0;j<carts.listOfProduct.size();j++)
 							{
-								carts.listOfProduct.get(j).Quantity+=Q;
-								check=true;
-								break;
+								if(n.equals(carts.listOfProduct.get(j).PName))
+								{
+									carts.listOfProduct.get(j).Quantity+=Q;
+									check=true;
+									break;
+								}
+									
 							}
+							
+							if(check==false)
+							{
+							  carts.listOfProduct.add(p.get(i));
+							  carts.listOfProduct.get(carts.listOfProduct.size()-1).Quantity=Q;
 								
-						}
-						
-						if(check==false)
-						{
-						  carts.listOfProduct.add(p.get(i));
-						  carts.listOfProduct.get(carts.listOfProduct.size()-1).Quantity=Q;
+							}
 							
 						}
-						
 					}
-				}
 
+				}
 			}
 		}
+		
+		else
+			System.out.println("System Don't have Product !!! ");
+		
 
 	}
 	
@@ -103,65 +116,72 @@ public class Buyer extends User{
 	public static void RemoveProduct(Vector<Product> systemProducts,Vector<Store> systemStores)     // Done 3la l a5er
 	{
 		
-		for(int i=0;i<carts.listOfProduct.size();i++)
+		if(carts.listOfProduct.size() != 0)
 		{
-			System.out.println("Name      : "+carts.listOfProduct.get(i).PName);
-			System.out.println("Price     : "+carts.listOfProduct.get(i).Price);
-			System.out.println("Quantity    : "+carts.listOfProduct.get(i).Quantity);
-			System.out.println("BrandName : "+carts.listOfProduct.get(i).BrandName);
-			System.out.println("Type      : "+carts.listOfProduct.get(i).ProductType);
-			System.out.println("StoreName      : "+carts.listOfProduct.get(i).StoreName);
-			System.out.println("-----------------------------------------------------------");
-
-		}
-		
-		System.out.println("Please Enter Product Name : ");
-		
-		String n,storeName="";
-		int Quantity=0;
-		
-		Scanner input=new Scanner(System.in);
-		
-		n=input.nextLine();
-		
-		
-		//Quantity , storeName 
-		
-		 // update cart
-		for(int i=0;i<carts.listOfProduct.size();i++)
-		{
-			if(n.equals(carts.listOfProduct.get(i).PName))
+			for(int i=0;i<carts.listOfProduct.size();i++)
 			{
-				storeName=carts.listOfProduct.get(i).StoreName;
-				Quantity=carts.listOfProduct.get(i).Quantity;
-				carts.listOfProduct.remove(i);
-				System.out.println("Product has been removed ! ");
+				System.out.println("Name      : "+carts.listOfProduct.get(i).PName);
+				System.out.println("Price     : "+carts.listOfProduct.get(i).Price);
+				System.out.println("Quantity    : "+carts.listOfProduct.get(i).Quantity);
+				System.out.println("BrandName : "+carts.listOfProduct.get(i).BrandName);
+				System.out.println("Type      : "+carts.listOfProduct.get(i).ProductType);
+				System.out.println("StoreName      : "+carts.listOfProduct.get(i).StoreName);
+				System.out.println("-----------------------------------------------------------");
 
 			}
-		}
-		
-		
-		//update product in system products
-		for(int i=0 ; i <systemProducts.size();i++)
-		{
-			if(n.equals(systemProducts.get(i).PName))
+			
+			System.out.println("Please Enter Product Name : ");
+			
+			String n,storeName="";
+			int Quantity=0;
+			
+			Scanner input=new Scanner(System.in);
+			
+			n=input.nextLine();
+			
+			
+			//Quantity , storeName 
+			
+			 // update cart
+			for(int i=0;i<carts.listOfProduct.size();i++)
 			{
-				systemProducts.get(i).Quantity+=Quantity;
+				if(n.equals(carts.listOfProduct.get(i).PName))
+				{
+					storeName=carts.listOfProduct.get(i).StoreName;
+					Quantity=carts.listOfProduct.get(i).Quantity;
+					carts.listOfProduct.remove(i);
+					System.out.println("Product has been removed ! ");
+
+				}
 			}
-		}
-		
-		
-		
-		//update product in the store
-		if(storeName!="")
-		{
-		for (int i = 0; i < systemStores.size(); i++) 
-			if(storeName.equals(systemStores.get(i).Name))
-				for (int j = 0; j < systemStores.get(i).product.size(); j++) 
-					if(n.equals(systemStores.get(i).product.get(j).PName))
-						systemStores.get(i).product.get(j).Quantity+=Quantity;
+			
+			
+			//update product in system products
+			for(int i=0 ; i <systemProducts.size();i++)
+			{
+				if(n.equals(systemProducts.get(i).PName))
+				{
+					systemProducts.get(i).Quantity+=Quantity;
+				}
+			}
+			
+			
+			
+			//update product in the store
+			if(storeName!="")
+			{
+			for (int i = 0; i < systemStores.size(); i++) 
+				if(storeName.equals(systemStores.get(i).Name))
+					for (int j = 0; j < systemStores.get(i).product.size(); j++) 
+						if(n.equals(systemStores.get(i).product.get(j).PName))
+							systemStores.get(i).product.get(j).Quantity+=Quantity;
+				
+			}
 			
 		}
+		
+		else
+			System.out.println("Cart is empty !!!");
 		
 		
 		
@@ -183,7 +203,7 @@ public class Buyer extends User{
 		order.closed=false;
 		order.orderID=(carts.listOfProduct.size()+120)%3;
 		order.orderDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());                                       // 8eeeeer Date 
-		carts.listOfProduct.clear();
+		
 		return order;
 	}
 
@@ -215,16 +235,24 @@ public class Buyer extends User{
 	public static void ExploreBrand(Vector<Brand> systemBrands)
 	{
 		
-		for(int i=0 ; i<systemBrands.size();i++)
+		if(systemBrands.size() != 0)
 		{
-			System.out.println(i+")"+systemBrands.get(i).name);
+			for(int i=0 ; i<systemBrands.size();i++)
+			{
+				System.out.println(i+")"+systemBrands.get(i).name);
+			}
+			
+			int choice;
+			System.out.println("Enter Brand number : ");
+			Scanner input = new Scanner(System.in);
+			choice=input.nextInt();
+			systemBrands.get(choice).Get_Brand_Products();
+
+		}
+		else
+		{
+			System.out.println("System Don't Have Brands !! ");
 		}
 		
-		int choice;
-		System.out.println("Enter Brand number : ");
-		Scanner input = new Scanner(System.in);
-		choice=input.nextInt();
-		systemBrands.get(choice).Get_Brand_Products();
-
 	}
 }
