@@ -1,0 +1,193 @@
+import java.awt.Checkbox;
+import java.util.Scanner;
+import java.util.Vector;
+
+import javax.print.DocFlavor.INPUT_STREAM;
+
+
+public class StoreOwner extends User{
+
+	public static Vector<Store> store= new Vector<Store>();
+	public  static boolean Premium=false;
+	
+	
+	public static  void AddStore(Vector<Store> systemStores )  //vector of storeOwner 's stores
+	{
+		
+		Store ss=new Store();
+		Scanner input = new Scanner(System.in);
+	
+		System.out.println("Enter Name : " );
+		ss.Name=input.nextLine();
+		
+		System.out.println("Enter Store Type : " );
+		ss.StoreType=input.nextLine();
+
+		ss.StoreID=(store.size()+250)%12;
+	
+		store.add(ss);
+		systemStores.add(ss);
+		
+		// make store owner premium by reaching 3 stores
+		if(store.size()==3)
+		{
+	       Premium=true;	
+		}
+		
+	}
+	
+	public static void AddProduct(Vector<Product> systemProducts , Vector<Store> s ,Vector<Brand> Brands)
+	{
+		for(int i=0 ; i<s.size();i++)
+		{
+			System.out.println(i+")"+s.get(i).Name);
+		}
+		
+		int choice;
+		System.out.println("Enter Store Number : ");
+		Scanner input = new Scanner(System.in);
+		choice=input.nextInt();
+		
+		input.nextLine();
+		
+		Product product=new Product();
+		
+		System.out.println("Product Name : ");
+		product.PName=input.nextLine();
+		System.out.println("Product Price : ");
+		product.Price=input.nextInt();
+		input.nextLine();
+
+		System.out.println("Product Brand Name : ");
+		product.BrandName=input.nextLine();
+		
+		System.out.println("Product Type : ");
+		product.ProductType=input.nextLine();
+				
+		product.StoreName=s.get(choice).Name;
+		
+			s.get(choice).product.add(product);
+			System.out.println("Product Added Succesfully !! ");
+				
+			systemProducts.add(product);
+			
+			boolean check=false;
+			for(int i =0 ; i <Brands.size();i++)
+			{
+				if(product.BrandName.equals(Brands.get(i).name))
+				{
+					Brands.get(i).brandProducts.add(product);
+					check=true;
+					break;
+				}
+			}
+			
+			if (check==false) 
+			{
+				Brand brand=new Brand();
+				brand.name=product.BrandName;
+				brand.brandProducts.add(product);
+				Brands.add(brand);
+			}
+		
+
+	}
+
+	
+	public static void GetMostViewedProduct()     //store owner store Products
+	{
+		
+		for(int i=0 ; i<store.size();i++)
+		{
+			System.out.println(i+")"+store.get(i).Name);
+		}
+		
+		int choice;
+		System.out.println("Enter Store Number : ");
+		Scanner input = new Scanner(System.in);
+		choice=input.nextInt();
+		
+		Vector<Product> p =new Vector<Product>();
+		
+		p=store.get(choice).product;
+		
+		int max=p.get(0).Counter;
+		int idx=0;
+		
+		for(int i=1;i<p.size();i++)
+		{
+			if(max<p.get(i).Counter)
+			{
+				max=p.get(i).Counter;
+				idx=i;
+			}
+			
+		}
+		
+		System.out.println("Name : "+p.get(idx).PName);
+		System.out.println("Price : "+p.get(idx).Price);
+		System.out.println("Product type : "+p.get(idx).ProductType);
+		System.out.println("Brand Name : "+p.get(idx).BrandName);
+		System.out.println("Quantity : "+p.get(idx).Quantity);
+		System.out.println("storeName : "+p.get(idx).StoreName);
+		
+		System.out.println("Number of Views : "+p.get(idx).Counter);
+		
+		
+	}
+	
+	public static void Explore_views()    //Explore number of views to each product in a store 
+	{
+		for(int i=0 ; i<store.size();i++)
+		{
+			System.out.println(i+")"+store.get(i).Name);
+		}
+		
+		int choice;
+		System.out.println("Enter Store Number : ");
+		Scanner input = new Scanner(System.in);
+		choice=input.nextInt();
+		Vector<Product> p =new Vector<Product>();
+		p=store.get(choice).product;
+		
+		
+		for(int i=0 ; i<p.size();i++)
+		{
+			System.out.println("Name : "+p.get(i).PName);
+			System.out.println("Price : "+p.get(i).Price);
+			System.out.println("Product type : "+p.get(i).ProductType);
+			System.out.println("Brand Name : "+p.get(i).BrandName);
+			System.out.println("Quantity : "+p.get(i).Quantity);
+			System.out.println("storeName : "+p.get(i).StoreName);
+			System.out.println("Number of Views : "+p.get(i).Counter);
+		}				
+	}
+	
+	
+	public static void SuggestProduct(Vector<Product> suggest )
+	{
+		
+		Product product=new Product();
+		Scanner input=new Scanner(System.in);
+		
+		System.out.println("Enter Product Name : ");
+		product.PName=input.nextLine();
+		
+		System.out.println("Enter Product Price : ");
+		product.Price=input.nextInt();
+		input.nextLine();
+		
+		System.out.println("Enter Product Brand Name : ");
+		product.BrandName=input.nextLine();
+		
+		System.out.println("Enter Product Type : ");
+		product.ProductType=input.nextLine();
+		
+		
+		suggest.add(product);
+		System.out.println("Product has been suggested  ! " );
+		
+	}
+	
+	
+}
