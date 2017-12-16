@@ -1,0 +1,295 @@
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Scanner;
+import java.util.Vector;
+import java.util.logging.Logger;
+
+public class Platform {
+
+
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+
+		Vector<User> users = new Vector<User>();
+		Vector<Admin> admins = new Vector<Admin>();
+
+		Admin admin = new Admin();
+		admin.userName = "Ahmed";
+		admin.password = "1";
+		admin.mail = "admin@admin.com";
+		admin.phone = "1234";
+		admin.adminID = 1;
+		
+		admins.add(admin);
+		
+
+		Store store = new Store();
+
+		Vector<Product> systemProducts = new Vector<Product>();
+		Vector<Store> systemStores = new Vector<Store>();
+		Vector<Brand> systemBrands = new Vector<Brand>();
+
+		Vector<Product> suggest = new Vector<Product>();
+		Vector<Payment> VoucherCards = new Vector<Payment>();
+		
+
+		System.out.println("------------------------------------------ WElCOME TO The Online sites platform ---------------------------------------------");
+
+		while (true) {
+
+			System.out.println(" 1. Register ");
+			System.out.println(" 2. Login ");
+			System.out.println(" 3. Login As Admin");
+			System.out.println(" 4. Exit ");
+		//	System.out.println(users.size());
+			int choice = input.nextInt();
+
+			User user = new User();
+
+			if (choice == 1) {
+				user.Register(users);
+			} 
+			else if (choice == 2) {
+
+				input.nextLine();
+				System.out.println("Enter Username : ");
+				user.userName = input.nextLine();
+
+				System.out.println("Enter Password : ");
+				user.password = input.nextLine();
+
+				System.out.println(user.userName);
+				System.out.println(user.password);
+
+				if (user.Login(users, user) == true)
+				{
+					if (user.userType == "Buyer") 
+					{
+						
+						Buyer buyer = new Buyer();
+
+						while (true) {
+
+							System.out.println(" 1. Add Product ");
+							System.out.println(" 2. Remove Product ");
+							System.out.println(" 3. Make Cart Order ");
+							System.out.println(" 4. Suggest Product ");
+							System.out.println(" 5. Update Info ");
+							System.out.println(" 6. Get Info ");
+							System.out.println(" 7. Display Products in store ");
+							System.out.println(" 8. Display Products By Brand ");
+							System.out.println(" 9. Display specific Product details ");
+							System.out.println(" 10. Display Product in Cart ");
+							System.out.println(" 11. LogOut ");
+
+							choice = input.nextInt();
+
+							if (choice == 1)
+							{
+								input.nextLine();
+								Buyer.AddProduct(systemProducts,systemStores);
+							}
+								
+
+							else if (choice == 2)
+							{
+								input.nextLine();
+								Buyer.RemoveProduct(systemProducts,systemStores);
+							}
+							
+							else if (choice == 3) 
+							{
+								input.nextLine();
+								Order order = new Order();
+								order=Buyer.BuyProducts();
+								Order.MakeOrder(buyer.carts,VoucherCards,buyer);
+							} 
+							
+							else if (choice == 4)
+							{
+								input.nextLine();	
+								buyer.SuggestProduct(suggest);    //  leh mndee4 l kol Product Brand name
+							}
+							
+							else if (choice == 5)
+							{
+								input.nextLine();	
+								buyer.UpdateInfo(users, user);
+							}
+							
+							else if (choice == 6)
+							{
+								buyer.GetInfo(users, user);
+							}
+							
+							else if (choice == 7)
+							{
+								buyer.ExploreProducts(systemStores);
+							}
+								
+							
+							else if (choice == 8)
+							{
+								buyer.ExploreBrand(systemBrands);
+							}
+							
+							else if (choice == 9)
+							{
+								input.nextLine();
+								buyer.ViewSpecificProductDetails(systemProducts);
+							}
+							else if (choice == 10)
+							{
+								input.nextLine();
+								buyer.carts.DisplayProducts();
+							}
+							
+							else if (choice == 11) {
+								buyer.Logout(users, user);
+								break;
+							}
+						}
+
+					} 
+					else if (user.userType == "StoreOwner") {
+
+						StoreOwner storeOwner = new StoreOwner();
+
+						while (true) {
+							System.out.println(" 1. Add Product ");
+							System.out.println(" 2. Add Store ");
+							System.out.println(" 3. Get Most Viewed Product (Premium Store Ownner) ");
+							System.out.println(" 4. Explore Views ");
+							System.out.println(" 5. Suggest Product ");
+							System.out.println(" 6. Update Info ");
+							System.out.println(" 7. Get Info ");
+							System.out.println(" 8. Explore Products in store ");
+							System.out.println(" 9. View specific Product details ");
+							System.out.println(" 10. LogOut ");
+
+							choice = input.nextInt();
+							
+							if (choice == 1)
+							{
+								input.nextLine();
+								storeOwner.AddProduct(systemProducts, storeOwner.store, systemBrands);
+							}
+							
+							else if (choice == 2)
+							{
+								input.nextLine();	
+								StoreOwner.AddStore(systemStores);
+							}
+							
+							else if (choice == 3)
+								storeOwner.GetMostViewedProduct();   // m4 3aref De w l t7teha by3melo eh 
+							
+							else if (choice == 4)
+								storeOwner.Explore_views();
+							
+							else if (choice == 5)
+							{
+								input.nextLine();
+								storeOwner.SuggestProduct(suggest);
+							}
+							
+							else if (choice == 6)
+								storeOwner.UpdateInfo(users, storeOwner);
+							
+							else if (choice == 7)
+								storeOwner.GetInfo(users, storeOwner);
+							
+							else if (choice == 8)
+							{
+								input.nextLine();
+								storeOwner.ExploreProducts(systemStores);
+
+							}
+							
+							else if (choice == 9)
+							{
+								input.nextLine();
+								storeOwner.ViewSpecificProductDetails(systemProducts);
+							}
+							
+							else if (choice == 10) {
+								StoreOwner.Logout(users, user);
+								break;
+							}
+
+						}
+
+					}
+				}
+
+			}
+
+			else if (choice == 3) {
+
+				input.nextLine();
+				
+				Admin admin2 = new Admin();
+				System.out.println("Enter Username : ");
+				admin2.userName = input.nextLine();
+				System.out.println("Enter Password : ");
+				admin2.password = input.nextLine();
+
+				if (admin2.Login(admins, admin2) == true) {
+					
+					while (true) 
+					{
+						System.out.println(" 1. Add Product ");
+						System.out.println(" 2. Add Brand ");
+						System.out.println(" 3. Display Product ");
+						System.out.println(" 4. Accept Suggested Product ");
+						System.out.println(" 5. Provide Voucher Card ");
+						System.out.println(" 6. Get Info ");
+						System.out.println(" 7. LogOut ");
+						choice = input.nextInt();
+						
+						if (choice == 1)
+						{
+							input.nextLine();
+							admin2.AddProduct(systemProducts, systemBrands);
+						} 
+						else if (choice == 2) 
+						{
+							input.nextLine();
+							admin2.AddBrand(systemBrands);
+
+						} 
+						else if (choice == 3)
+						{
+							input.nextLine();
+							admin2.Display(systemProducts);
+						}
+						else if (choice == 4)
+						{
+							input.nextLine();
+							admin2.AcceptProduct(suggest, systemProducts);
+						}
+						else if (choice == 5)
+						{
+							admin2.Provide_Voucher(VoucherCards);
+						} 
+						else if (choice == 6) 
+						{
+							admin2.GetInfo(admins, admin2);
+						} 
+						else if (choice == 7)
+							break;
+					}
+
+				}
+
+			} 
+			else if (choice == 4)
+				break;
+
+		}
+
+	}
+
+}
